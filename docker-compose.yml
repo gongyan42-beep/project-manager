@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: project-manager
+    ports:
+      - "3007:3007"
+    environment:
+      - PORT=3007
+      - PROJECTS_DIR=/www/wwwroot
+    volumes:
+      - /www/wwwroot:/www/wwwroot:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
