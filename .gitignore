@@ -10,12 +10,17 @@ data/
 .env
 .env.*
 *.env
-CLAUDE.md
-claude.md
-*CLAUDE*
-.claude/
 *.pem
 *.key
 credentials.json
 secrets.json
+
+# Claude Code 配置
+CLAUDE.local.md          # 本地私密配置（密码等）
+.claude/settings.local.json  # 本地权限设置
+
+# 以下可以提交（不含敏感信息）：
+# - CLAUDE.md             # 项目规范
+# - .claude/commands/     # 斜杠命令
+# - .claude/settings.json # 共享权限配置
 
