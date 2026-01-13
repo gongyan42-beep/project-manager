@@ -220,6 +220,9 @@ class ProjectScanner:
 
             # 管理工具
             'kpi-design-tool': 'https://kpi.longgonghuohuo.com',
+
+            # 电商工具
+            'ecom-image-generator': 'https://ecom-image.longgonghuohuo.com',
         }
         return url_map.get(project_name)
 
