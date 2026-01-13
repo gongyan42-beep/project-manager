@@ -14,11 +14,15 @@ class ProjectScanner:
         """扫描所有项目"""
         projects = []
 
-        # 扫描多个位置（不扫描受保护的目录如 Desktop）
-        scan_locations = [
-            self.projects_dir,  # /Users/gusuping/code/
-            Path('/Users/gusuping'),  # 用户主目录（旧项目）
-        ]
+        # 根据配置的目录动态设置扫描位置
+        scan_locations = [self.projects_dir]
+
+        # 本地 Mac 环境额外扫描用户主目录
+        if str(self.projects_dir).startswith('/Users/gusuping'):
+            scan_locations.append(Path('/Users/gusuping'))
+
+        # 服务器环境只扫描 /www/wwwroot
+        # （不需要额外添加，因为 self.projects_dir 就是它）
 
         for location in scan_locations:
             if not location.exists():

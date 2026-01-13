@@ -10,11 +10,11 @@ RUN pip install --no-cache-dir -r requirements.txt gunicorn
 COPY . .
 
 # 设置环境变量
-ENV PORT=3007
+ENV PORT=3018
 ENV PROJECTS_DIR=/www/wwwroot
 
 # 暴露端口
-EXPOSE 3007
+EXPOSE 3018
 
 # 启动命令
-CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:3007", "app:app"]
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:3018", "app:app"]

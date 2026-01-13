@@ -62,7 +62,8 @@ def start_project():
             return jsonify({'success': False, 'message': '缺少项目路径'}), 400
 
         # 安全检查：确保路径在允许的目录内
-        if not project_path.startswith('/Users/gusuping/'):
+        allowed_paths = ['/Users/gusuping/', '/www/wwwroot/']
+        if not any(project_path.startswith(p) for p in allowed_paths):
             return jsonify({'success': False, 'message': '无效的项目路径'}), 400
 
         result = manager.start_project(project_path)
@@ -130,8 +131,9 @@ def get_project_detail(project_name):
 
 @app.route('/api/projects/open-terminal', methods=['POST'])
 def open_terminal():
-    """在终端中打开项目目录（用于 Claude Code 对话）"""
+    """在终端中打开项目目录（仅本地可用）"""
     import subprocess
+    import platform
 
     try:
         data = request.json
@@ -141,10 +143,18 @@ def open_terminal():
             return jsonify({'success': False, 'message': '缺少项目路径'}), 400
 
         # 安全检查：确保路径在允许的目录内，且不包含危险字符
-        if not project_path.startswith('/Users/gusuping/'):
+        allowed_paths = ['/Users/gusuping/', '/www/wwwroot/']
+        if not any(project_path.startswith(p) for p in allowed_paths):
             return jsonify({'success': False, 'message': '无效的项目路径'}), 400
         if "'" in project_path or '"' in project_path or ';' in project_path:
             return jsonify({'success': False, 'message': '路径包含非法字符'}), 400
+
+        # 仅在 macOS 本地环境下支持打开终端
+        if platform.system() != 'Darwin':
+            return jsonify({
+                'success': False,
+                'message': '此功能仅在本地 Mac 环境可用，线上版本请直接 SSH 到服务器操作'
+            }), 400
 
         # 使用 AppleScript 打开新的终端窗口并进入项目目录
         script = f'''

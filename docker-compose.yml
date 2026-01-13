@@ -5,9 +5,9 @@ services:
     build: .
     container_name: project-manager
     ports:
-      - "3007:3007"
+      - "3018:3018"
     environment:
-      - PORT=3007
+      - PORT=3018
       - PROJECTS_DIR=/www/wwwroot
     volumes:
       - /www/wwwroot:/www/wwwroot:ro
